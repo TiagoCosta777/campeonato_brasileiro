@@ -49,18 +49,39 @@ foreign key(arena_id) references Arena(arena_id)
 
 CREATE TABLE Gol(
 gol_id int primary key auto_increment,
-rodada int not null,
-data date,
-horario time,
-mandante_id int,
-visitante_id int,
-arena_id int,
-placar_mandante int not null,
-placar_visitante int not null,
-foreign key(mandante_id) references Time(time_id),
-foreign key(visitante_id) references Time(time_id),
-foreign key(arena_id) references Arena(arena_id)
+partida_id int,
+jogador_id int,
+time_id int,
+minuto int,
+tipo varchar(50),
+foreign key(partida_id) references Partida(partida_id),
+foreign key(jogador_id) references Jogador(jogador_id),
+foreign key(time_id) references Time(time_id)
 );
 
 
-DROP TABLE Gol;
+CREATE TABLE Cartão(
+cartao_id int primary key auto_increment,
+partida_id int,
+jogador_id int,
+time_id int,
+cor varchar(10),
+minuto int,
+foreign key(partida_id) references Partida(partida_id),
+foreign key(jogador_id) references Jogador(jogador_id),
+foreign key(time_id) references Time(time_id)
+);
+
+
+CREATE TABLE Estatitica(
+estatitica_id int primary key auto_increment,
+partida_id int,
+time_id int,
+chutes int,
+chutes_a_gol int,
+posse_de_bola dec(5, 2),
+passes int,
+precisao_passes dec(5, 2),
+foreign key(partida_id) references Partida(partida_id),
+foreign key(time_id) references Time(time_id)
+);
